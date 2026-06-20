@@ -1,0 +1,22 @@
+profiles:
+  default:
+    notes: 
+    fqbn: esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=no_ota,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=none,JTAGAdapter=default,ZigbeeMode=default
+    platforms:
+      - platform: esp32:esp32 (3.3.3)
+    libraries:
+      - WiFi (3.3.3)
+      - Networking (3.3.3)
+      - lvgl (9.4.0)
+      - TFT_eSPI (2.5.43)
+      - SPI (3.3.3)
+      - FS (3.3.3)
+      - SPIFFS (3.3.3)
+      - XPT2046_Touchscreen (1.4)
+      - ESP_SSLClient (3.0.6)
+      - MycilaNTP (6.0.5)
+    port: /dev/ttyUSB0
+    port_config:
+      baudrate: 115200
+
+
