@@ -23,7 +23,7 @@ void sleep_until_5pm() {
 
   t_now = mktime(&now);
 
-  esp_sleep_enable_timer_wakeup((t_next - t_now) * 1000000L);
+  esp_sleep_enable_timer_wakeup((uint64_t)(t_next - t_now) * 1000000ULL);
   touchSleepWakeUpEnable(T0, 40);
   esp_sleep_enable_touchpad_wakeup();
   Serial.println("Going to sleep now");
