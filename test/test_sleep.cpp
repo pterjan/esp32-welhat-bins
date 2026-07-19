@@ -89,6 +89,43 @@ TEST_F(SleepTest, TomorrowIsNotCollectionDay) {
     EXPECT_EQ(mock_sleep_time, expected_sleep_time);
 }
 
+TEST_F(SleepTest, DeepSleepDoesNotOverflowForLongDurations) {
+    // Set a baseline time of January 1, 2025 00:00:00
+    memset(&mock_local_time, 0, sizeof(mock_local_time));
+    mock_local_time.tm_year = 2025 - 1900;
+    mock_local_time.tm_mon = 0; // January
+    mock_local_time.tm_mday = 1;
+    mock_local_time.tm_hour = 0;
+    mock_local_time.tm_min = 0;
+    mock_local_time.tm_sec = 0;
+
+    // Create a time diff that will overflow an unsigned 32-bit int if multiplied by 1000000.
+    // 4294.96 seconds overflows 32-bit unsigned int (4,294,967,295). Let's use 24 hours.
+    mock_local_time.tm_hour = 17;
+    mock_local_time.tm_min = 0;
+    mock_local_time.tm_sec = 0;
+
+    struct bins b;
+
+    // The target next collection is later (Jan 5, 2025) so that it calls sleep_until_5pm.
+    struct tm target_tm = mock_local_time;
+    target_tm.tm_mday += 4;
+    target_tm.tm_hour = 0;
+    target_tm.tm_min = 0;
+    target_tm.tm_sec = 0;
+    b.next_date = mktime(&target_tm);
+
+    sleep_if_not_tonight(&b);
+
+    // Should go to sleep
+    EXPECT_TRUE(mock_deep_sleep_called);
+
+    // Expected sleep time: 24 hours = 86400 seconds
+    uint64_t expected_sleep_time = 86400ULL * 1000000ULL;
+
+    EXPECT_EQ(mock_sleep_time, expected_sleep_time);
+}
+
 TEST_F(SleepTest, TomorrowIsNotCollectionDayAfter5PM) {
     struct bins b;
 
