@@ -143,7 +143,6 @@ void check_bins(struct bins *b) {
     ssl_client.print("\r\n\r\n");
     ssl_client.print(postData);
     Serial.print("Read response...");
-    unsigned long ms = millis();
     // <p><table class=""><thead><tr><th>Service</th><th>Next collection</th></tr></thead><tbody><tr><td>Domestic Waste Collection Service</td><td>Wednesday 10 December 2025</td></tr><tr><td>Food Waste Collection Service</td><td>Wednesday 10 December 2025</td></tr><tr><td>Garden Waste Collection Service</td><td>Wednesday 17 December 2025</td></tr><tr><td>Recycling Collection Service</td><td>Wednesday 17 December 2025</td></tr></tbody></table>
     // Store from Next collection to \n
 
