@@ -169,16 +169,20 @@ void check_bins(struct bins *b) {
         break;
       }
       if (!found_line) {
+        const char *needle = "Next collection";
+        const int needle_len = strlen(needle);
         buf[i] = '\0';
-        char *next = strstr(buf, "Next collection");
+        char *next = strstr(buf, needle);
         if (next) {
           //Serial.println("found line!");
           found_line = 1;
-          i = i - (next - buf) - strlen("Next collection");
-          memmove(buf, next + strlen("Next collection"), i);
-        } else if (i > strlen("Next collection")) {
-          memmove(buf, buf + i - strlen("Next collection"), strlen("Next collection"));
-          i = strlen("Next collection");
+          i = i - (next - buf) - needle_len;
+          memmove(buf, next + needle_len, i);
+        } else if (i > needle_len) {
+          // It is not at the beginning of the buffer so
+          // keep only the last needle_len characters.
+          memmove(buf, buf + i - needle_len, needle_len);
+          i = needle_len;
         }
       }
     }
