@@ -56,8 +56,14 @@ void update_bins_from_line(char *buf, struct bins *b) {
   }
 
   Serial.print("Next collection: ");
-  Serial.println(b->next_date);
-
+  struct tm *tm_info = localtime(&b->next_date);
+  if (tm_info != NULL) {
+    char s[32];
+    strftime(s, sizeof(s), "%A %d %B %Y", tm_info);
+    Serial.println(s);
+  } else {
+    Serial.println(b->next_date);
+  }
   b->black = (t_black > 0 && t_black == b->next_date);
   b->blue = (t_blue > 0 && t_blue == b->next_date);
   b->brown = (t_brown > 0 && t_brown == b->next_date);
