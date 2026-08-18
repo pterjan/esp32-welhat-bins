@@ -34,6 +34,7 @@ static time_t parse_bin_date(char *buf, const char *service_name, const char *co
         struct tm t;
         memset(&t, 0, sizeof(t));
         strptime(bin_date, "%A %d %B %Y", &t);
+        t.tm_isdst = -1;
         t_bin = mktime(&t);
         e[0] = old_char;
       }

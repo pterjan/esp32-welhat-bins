@@ -17,6 +17,7 @@ void sleep_until_5pm() {
   }
   next.tm_hour = 17;
   next.tm_min = 0;
+  next.tm_isdst = -1;
   t_next = mktime(&next);
   Serial.print("Sleeping until next 5pm: ");
   Serial.println(&next, "%A %d %B %Y %H:%M");
@@ -43,6 +44,7 @@ void sleep_if_not_tonight(struct bins *b) {
   next.tm_sec = 0;
   next.tm_min = 0;
   next.tm_hour = 0;
+  next.tm_isdst = -1;
   mktime(&next);
 
   char s[32];
