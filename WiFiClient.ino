@@ -196,23 +196,21 @@ void display_bins(struct bins *b) {
   lv_obj_t *imgs[3];
   int bin_count = 0;
   int offset;
-  if (b->blue) {
-    LV_IMAGE_DECLARE(bin_blue);
-    imgs[bin_count] = lv_image_create(lv_screen_active());
-    lv_image_set_src(imgs[bin_count], &bin_blue);
-    bin_count++;
-  }
-  if (b->brown) {
-    LV_IMAGE_DECLARE(bin_brown);
-    imgs[bin_count] = lv_image_create(lv_screen_active());
-    lv_image_set_src(imgs[bin_count], &bin_brown);
-    bin_count++;
-  }
-  if (b->black) {
-    LV_IMAGE_DECLARE(bin_black);
-    imgs[bin_count] = lv_image_create(lv_screen_active());
-    lv_image_set_src(imgs[bin_count], &bin_black);
-    bin_count++;
+  LV_IMAGE_DECLARE(bin_blue);
+  LV_IMAGE_DECLARE(bin_brown);
+  LV_IMAGE_DECLARE(bin_black);
+  const void* bin_images[] = {
+    b->blue ? &bin_blue : nullptr,
+    b->brown ? &bin_brown : nullptr,
+    b->black ? &bin_black : nullptr
+  };
+
+  for (auto img : bin_images) {
+    if (img) {
+      imgs[bin_count] = lv_image_create(lv_screen_active());
+      lv_image_set_src(imgs[bin_count], img);
+      bin_count++;
+    }
   }
 
   lv_obj_t *label1 = lv_label_create(lv_screen_active());
