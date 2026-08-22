@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -I. -I.. -I./mocks -Wall
+CXXFLAGS = -std=c++17 -I. -I.. -I./mocks -Wall
 LDFLAGS = -L/usr/lib/x86_64-linux-gnu -lgtest -lgtest_main -pthread
 
 all: test_bins
